@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yueqian.cn.dao.IPersonDao">
+	<select id="getById" parameterType="int" resultMap="personResultMap">
+		select p.`id`
+		as person_id,p.`name` as personName,c.* 
+		from person p, card c 
+		where c.person_id = p.`id` and p.`id` = #{id}
+		
+	</select>
+	<resultMap type="com.yueqian.cn.dao.entity.Person" id="personResultMap">
+		<id property="id" column="person_id" />
+		<result property="name" column="personName" />
+		
+		<association property="card" javaType="com.yueqian.cn.dao.entity.Card">
+			<id property="id" column="id" />
+			<result property="num" column="num" />
+		</association>
+
+
+	</resultMap>
+
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yueqian.cn.dao.IUserDao">
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+	<resultMap type="com.yueqian.cn.dao.entity.User" id="userResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="sex" column="sex" />
+		<result property="address" column="address" />
+		<result property="birthday" column="birthday" />
+		<result property="money" column="money" />
+		<result property="score" column="score" />
+	</resultMap>
+  <!-- <select id="countAll"  resultType="int">
+  		select count(*) from dept
+  </select> -->
+  <!-- id:IUserDao的方法名  resultType:方法的返回类型 -->
+  <select id="getUserById" parameterType="int" resultMap="userResultMap">
+  		select * from tbl_user where id = #{id}
+  </select>
+  <select id="getAll" resultMap="userResultMap">
+  		select * from tbl_user
+  </select>
+  <select id="getUserByNameAndPass" parameterType="com.yueqian.cn.dao.entity.User" resultMap="userResultMap">
+  		
+  		SELECT * FROM tbl_user WHERE `name` = #{name} AND `password` = #{password}
+  </select>
+  
+  <insert id="save" parameterType="com.yueqian.cn.dao.entity.User" >
+  		insert into tbl_user(id,name,password,sex,address,birthday,money,score) 
+  		value (#{id},#{name},#{password},#{sex},#{address},#{birthday},#{money},#{score})
+  </insert>
+  
+  <select id="getTotalCount" resultType="int">
+  		select count(1) from tbl_user
+  </select>
+  
+  <select id="getOnePageInfo" parameterType="hashmap" resultMap="userResultMap">
+  		select * from tbl_user limit #{startRow},#{endRow}
+  </select>
+ </mapper>

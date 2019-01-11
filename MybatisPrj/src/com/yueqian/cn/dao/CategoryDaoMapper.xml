@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yueqian.cn.dao.ICategoryDao">
+	<select id="getChildrenById" parameterType="int" resultMap="categoryResultMap">
+		select * from category where parent_id = #{id}
+	</select>
+	<resultMap type="com.yueqian.cn.dao.entity.Category" id="categoryResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="parent_id" column="parent_id" />
+		<collection property="children" ofType="com.yueqian.cn.dao.entity.Category">
+			<id property="id" column="id" />
+			<result property="name" column="name" />
+			<result property="parent_id" column="parent_id" />
+		</collection>
+	</resultMap>
+	
+	<select id="getParentById" parameterType="int" resultMap="categoryResultMap">
+		select * from category where id = #{id}
+	</select>
+	<!-- <resultMap type="com.yueqian.cn.dao.entity.Category" id="parentResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="parent_id" column="parent_id" />
+		<association property="parent" javaType="com.yueqian.cn.dao.entity.Category">
+			<id property="id" column="id" />
+			<result property="name" column="name" />
+			<result property="parent_id" column="parent_id" />
+		</association>
+	</resultMap> -->
+</mapper>
